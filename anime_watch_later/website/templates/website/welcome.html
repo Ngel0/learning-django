@@ -1,1 +1,17 @@
-Hi again, I guess)
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Django Page</title>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit", name="submit" value="Submit">
+    </form>
+    {% if submit_button == "Submit" %}
+        <h1>Anime name is {{ anime_name }}</h1>
+        <h1>Description is {{ anime_description }}</h1>
+    {% endif %}
+</body>
+</html>
