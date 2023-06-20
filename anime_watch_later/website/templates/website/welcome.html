@@ -1,17 +1,56 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>My Django Page</title>
-</head>
-<body>
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit", name="submit" value="Submit">
-    </form>
-    {% if submit_button == "Submit" %}
-        <h1>Anime name is {{ anime_name }}</h1>
-        <h1>Description is {{ anime_description }}</h1>
-    {% endif %}
-</body>
-</html>
+{% extends "website/layout.html" %}
+
+{% block title %}Посмотреть позже{% endblock %}
+{% block body %}
+<table class="table">
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+    <h1>Количество неизведанных историй {{count_entries}}</h1>
+    <table  class="table table-striped table-hover">
+        {% for entry in my_list %}
+        <tr>
+            <th scope="row">1</th>
+            <td>{{entry.title}}</td>
+            <td>{{entry.medium_type}}</td>
+            <td>{{entry.priority}}</td>
+            <td>{{entry.description}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="#" class="btn btn-success">Работает</a>
+{% endblock %}
+
+<!--<html>-->
+<!--<head>-->
+<!--    <title>My Django Page</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <form action="" method="post">-->
+<!--        {% csrf_token %}-->
+<!--        {{ form.as_p }}-->
+<!--        <input type="submit", name="submit" value="Submit">-->
+<!--    </form>-->
+<!--    {% if submit_button == "Submit" %}-->
+<!--        <h1>Anime name is {{ anime_name }}</h1>-->
+<!--        <h1>Description is {{ anime_description }}</h1>-->
+<!--    {% endif %}-->
+<!--</body>-->
+<!--</html>-->
