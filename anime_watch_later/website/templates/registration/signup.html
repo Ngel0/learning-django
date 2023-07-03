@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% block title %}Добавить запись{% endblock %}
 {% block body %}
-<!--<h2>Зарегистрироваться</h2>-->
+<h2>Регистрация</h2>
 <form method="post">
     {% csrf_token %}
     {{ form|crispy }}
