@@ -5,7 +5,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field
 
 class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField(required=True)
+    email = forms.EmailField()
     # username = forms.CharField(max_length=150, label='Username', help_text='Your help text here',
     #                            verbose_name='User Name')
 
