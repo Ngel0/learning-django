@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from website.views import welcome
+from website.views import welcome, signup
 from lists.views import add, delete
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,6 +25,8 @@ urlpatterns = [
     path('add', add),
     path('delete/<int:id>', delete),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('signup', signup, name='signup'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 ]
 
 # Urls provided by django.contrib.auth.urls
