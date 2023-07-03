@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from lists.models import Entry
 from .forms import UserRegisterForm
 from django.contrib.auth import authenticate, login
+from django.contrib import messages
 
 # Create your views here.
 
@@ -16,7 +17,9 @@ def signup(request):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            new_user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
+            username = form.cleaned_data['username']
+            new_user = authenticate(username=username, password=form.cleaned_data['password1'])
+            messages.success(request, f'Аккаунт успешно создан для пользователся {username}.')
             login(request, new_user)
             return redirect('/')
     else:
