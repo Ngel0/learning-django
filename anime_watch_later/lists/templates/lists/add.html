@@ -3,10 +3,10 @@
 {% block body %}
 <h2>Добавить запись</h2>
 <form method="post">
-    <table>
-        {{form}}
-    </table>
     {% csrf_token %}
+        {{ form.as_p }}
+<!--    <table>-->
+<!--    </table>-->
     <button type="submit">Создать</button>
 </form>
 {% endblock %}

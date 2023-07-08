@@ -23,15 +23,23 @@
     </tr>
   </tbody>
 </table>
-    <h1>Количество неизведанных историй {{count_entries}}</h1>
-    <table  class="table table-striped table-hover">
+    <h1>Количество неизведанных историй {{ count_entries }}</h1>
+    <table  class="table table-sm table-striped table-hover">
         {% for entry in my_list %}
         <tr>
-            <th scope="row">1</th>
-            <td>{{entry.title}}</td>
-            <td>{{entry.medium_type}}</td>
-            <td>{{entry.priority}}</td>
-            <td>{{entry.description}}</td>
+            <td>{{ entry.title }}</td>
+            <td>{{ entry.medium_type }}</td>
+            <td>
+                {% for genre in entry.genres.all %}
+                    {{ genre }}
+                {% endfor %}
+            </td>
+            <td>{{ entry.priority }}</td>
+            <td>{{ entry.description }}</td>
+            <td>
+                <a class="btn-bnt-danger" href="javascript: delete()" role="button"></a>
+                <button class="btn btn-sm btn-outline-danger" id="delete_button">удалить</button>
+            </td>
         </tr>
         {% endfor %}
     </table>

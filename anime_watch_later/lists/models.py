@@ -3,16 +3,36 @@ from django.db import models
 # Create your models here.
 class Genre(models.Model):
     name = models.CharField(max_length=30, verbose_name='название жанра')
+
+    class Meta:
+        verbose_name = 'жанр'
+        verbose_name_plural = 'жанры'
+
     def __str__(self) -> str:
         return f'{self.name}'
 
 class Entry(models.Model):
-    title = models.CharField(max_length=100, verbose_name='Название')
-    medium_type = models.CharField(max_length=10, verbose_name='Вид медиа') #тип медиа: фильм сериал аниме книга другое
-    #genres = models.ManyToManyField(Genre, verbose_name='жанры', related_name='genre_books')
-    #fgsdg = models.CharField(max_length=10) #добавив поле я не могу добраться до уже существующих
-    priority = models.IntegerField(default=0, verbose_name='Приоритет')
-    description = models.CharField(max_length=500, verbose_name='Описание')
+    ANIME = 'Аниме'
+    SERIES = 'Сериал'
+    MOVIE = 'Фильм'
+    BOOK = 'Книга'
+    OTHER = 'Другое'
+    MEDIUM_TYPES = (
+        (ANIME, 'Аниме'),
+        (SERIES, 'Сериал'),
+        (MOVIE, 'Фильм'),
+        (BOOK, 'Книга'),
+        (OTHER, 'Другое'),
+    )
+    title = models.CharField(max_length=100, verbose_name='название')
+    medium_type = models.CharField(max_length=10, choices=MEDIUM_TYPES, default=ANIME, verbose_name='вид медиа')
+    genres = models.ManyToManyField(Genre, verbose_name='жанры', related_name='entries')
+    priority = models.IntegerField(default=0, verbose_name='приоритет')
+    description = models.CharField(max_length=500, verbose_name='описание')
+
+    class Meta:
+        verbose_name = 'запись'
+        verbose_name_plural = 'записи'
 
     def __str__(self) -> str:
         return f'{self.title}'
