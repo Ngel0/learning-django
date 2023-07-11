@@ -1,13 +1,11 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Field
+from django.core.exceptions import ValidationError
+
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
-    # username = forms.CharField(max_length=150, label='Username', help_text='Your help text here',
-    #                            verbose_name='User Name')
 
     def __init__(self, *args, **kwargs):
         super(UserRegisterForm, self).__init__(*args, **kwargs)
@@ -17,6 +15,12 @@ class UserRegisterForm(UserCreationForm):
         self.fields['email'].label = 'Адрес эл. почты'
         self.fields['password1'].label = 'Пароль'
         self.fields['password2'].label = 'Подтверждение пароля'
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise ValidationError("Email already exists")
+        return email
 
     class Meta(UserCreationForm.Meta):
         model = User
