@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from website.views import welcome, signup, delete
+from website.views import welcome, delete
+from users.views import signup
 from lists.views import add
 from django.contrib.auth import views as auth_views
 
@@ -26,11 +27,11 @@ urlpatterns = [
     path('delete/<int:id>', delete, name='delete'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('signup', signup, name='signup'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('logout', auth_views.LogoutView.as_view(), name='logout'),
 ]
 
 # Urls provided by django.contrib.auth.urls
-# accounts/ login/ [name='login']
+# accounts/ login.html/ [name='login.html']
 # accounts/ logout/ [name='logout']
 # accounts/ password_change/ [name='password_change']
 # accounts/ password_change/done/ [name='password_change_done']

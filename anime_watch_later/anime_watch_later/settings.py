@@ -40,12 +40,15 @@ INSTALLED_APPS = [
     'website',
     'lists',
     'crispy_forms',
-    'crispy_bootstrap5'
+    'crispy_bootstrap5',
+    'users',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+AUTH_USER_MODEL = 'users.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -130,5 +133,5 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Redirect to home URL after login (Default redirects to /accounts/profile/)
+# Redirect to home URL after login.html (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = 'welcome'
