@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import CustomUser
 
 # Create your models here.
 class Genre(models.Model):
@@ -24,6 +25,7 @@ class Entry(models.Model):
         (BOOK, 'Книга'),
         (OTHER, 'Другое'),
     )
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default='c75ea8db04df4d2e8eff8879b2506717')
     title = models.CharField(max_length=100, verbose_name='название')
     medium_type = models.CharField(max_length=10, choices=MEDIUM_TYPES, default=ANIME, verbose_name='вид медиа')
     genres = models.ManyToManyField(Genre, verbose_name='жанры', related_name='entries', blank=True)

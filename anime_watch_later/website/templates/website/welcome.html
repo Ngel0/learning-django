@@ -32,6 +32,7 @@ var csrf_token = '{{ csrf_token }}';
 <table class="table table-sm table-striped table-hover">
     {% for entry in my_list %}
     <tr>
+        <td>{{ entry.user }}</td>
         <td>{{ entry.title }}</td>
         <td>{{ entry.medium_type }}</td>
         <td>
