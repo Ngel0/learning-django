@@ -3,9 +3,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
+    var new_count = {{ count_entries }}
     $(".delete-button").click(function(){
         var id = $(this).data("id");
-        var row = $(this).closest('tr');
+        var row = $(this).closest("tr");
         $.ajax({
             method: "POST",
             url: "delete/" + id,
@@ -13,6 +14,8 @@ $(document).ready(function(){
             success: function(response) {
                 if (response.success) {
                     row.remove();
+                    new_count -= 1;
+                    $("#entries-count").text(new_count);
                 } else {
                     alert(response.error);
                 }
@@ -23,12 +26,12 @@ $(document).ready(function(){
         });
     });
 });
-var csrf_token = '{{ csrf_token }}';
+var csrf_token = "{{ csrf_token }}";
 </script>
 {% endblock %}
 {% block title %}Посмотреть позже{% endblock %}
 {% block body %}
-<h1>Количество неизведанных историй {{ count_entries }}</h1>
+<h1>Количество неизведанных историй <span id="entries-count">{{ count_entries }}</span></h1>
 <table class="table table-sm table-striped table-hover">
     {% for entry in my_list %}
     <tr>
