@@ -3,7 +3,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
-    var new_count = {{ count_entries }}
+    var new_count = {{ count_entries }};
     $(".delete-button").click(function(){
         var id = $(this).data("id");
         var row = $(this).closest("tr");
@@ -25,30 +25,62 @@ $(document).ready(function(){
             }
         });
     });
+
+    $('.sortable').click(function(){
+    var table = $(this).parents('table').eq(0)
+    var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+    this.asc = !this.asc
+    if (!this.asc){rows = rows.reverse()}
+    for (var i = 0; i < rows.length; i++){table.append(rows[i])}
+    })
+    function comparer(index) {
+        return function(a, b) {
+            var valA = getCellValue(a, index), valB = getCellValue(b, index)
+            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
+        }
+    }
+    function getCellValue(row, index){ return $(row).children('td').eq(index).text() }
 });
 var csrf_token = "{{ csrf_token }}";
 </script>
+<style>
+.sortable {
+    cursor: pointer;
+}
+</style>
 {% endblock %}
 {% block title %}Посмотреть позже{% endblock %}
 {% block body %}
 <h1>Количество неизведанных историй <span id="entries-count">{{ count_entries }}</span></h1>
-<table class="table table-sm table-striped table-hover">
-    {% for entry in my_list %}
-    <tr>
-        <td>{{ entry.user }}</td>
-        <td>{{ entry.title }}</td>
-        <td>{{ entry.medium_type }}</td>
-        <td>
-            {% for genre in entry.genres.all %}
-                {{ genre }}
-            {% endfor %}
-        </td>
-        <td>{{ entry.priority }}</td>
-        <td>{{ entry.description }}</td>
-        <td>
-            <button class="btn btn-sm btn-outline-danger delete-button" data-id="{{ entry.id }}">удалить</button>
-        </td>
-    </tr>
-    {% endfor %}
+<table class="table table-sm table-hover">
+    <thead class="table-secondary">
+        <tr>
+            <th class="sortable" scope="col">&#8470</th>
+            <th class="sortable" scope="col" style="width: 100px">Тип медиа</th>
+            <th class="sortable" scope="col" style="width: 400px">Название</th>
+            <th scope="col" style="width: 250px">Жанры</th>
+            <th class="sortable" scope="col">Приор.</th>
+            <th scope="col" colspan="2">Описание</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entry in my_list %}
+        <tr>
+            <td><strong>{{ forloop.counter }}</strong></td>
+            <td>{{ entry.medium_type }}</td>
+            <td>{{ entry.title }}</td>
+            <td>
+                {% for genre in entry.genres.all %}
+                    {{ genre }}
+                {% endfor %}
+            </td>
+            <td>{{ entry.priority }}</td>
+            <td>{{ entry.description }}</td>
+            <td>
+                <button class="btn btn-sm btn-outline-danger delete-button" data-id="{{ entry.id }}">удалить</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
 {% endblock %}
