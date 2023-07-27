@@ -1,86 +1,50 @@
-{% extends "layout.html" %}
-{% block head %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-    var new_count = {{ count_entries }};
-    $(".delete-button").click(function(){
-        var id = $(this).data("id");
-        var row = $(this).closest("tr");
-        $.ajax({
-            method: "POST",
-            url: "delete/" + id,
-            headers: { "X-CSRFToken": csrf_token },
-            success: function(response) {
-                if (response.success) {
-                    row.remove();
-                    new_count -= 1;
-                    $("#entries-count").text(new_count);
-                } else {
-                    alert(response.error);
-                }
-            },
-            error: function(xhr, status, error) {
-                alert("Error: " + xhr.statusText);
-            }
-        });
-    });
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Посмотреть позже</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</head>
+<body>
+    {% load static %}
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'welcome' %}">
+                <img src="{% static 'website/ngelo.png' %}" alt="Ngel0" width="55" height="50">
+                WatchLater
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse flex-row" id="navbarSupportedContent">
+                <div class="navbar-nav ms-auto">
+                    <a class="btn btn-outline-info me-2" href="{% url 'signup' %}">Зарегистрироваться</a>
+                    <a class="btn btn-outline-success me-2" href="{% url 'login' %}">Войти</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card" style="width: 24rem;">
+                    <div class="card-body">
+                        <p class="card-text">Это сгенерированный ИИ текст, потому что мне лень самому придумывать: "Добро пожаловать в WatchLater! Здесь Вы можете легко следить за фильмами, сериалами, аниме, играми и книгами, которые вы хотите посмотреть позже. Наша платформа бесплатна для использования, без рекламы, подписок и скрытых платежей. Зарегистрируйтесь сейчас и начните создавать свой список просмотра!"
+                        </p>
+                        <a href="{% url 'signup' %}" class="btn btn-primary">Зарегистрироваться прямо сейчас</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <img src="{% static 'website/ngelo.png' %}" alt="ListExample" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
 
-    $('.sortable').click(function(){
-    var table = $(this).parents('table').eq(0)
-    var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
-    this.asc = !this.asc
-    if (!this.asc){rows = rows.reverse()}
-    for (var i = 0; i < rows.length; i++){table.append(rows[i])}
-    })
-    function comparer(index) {
-        return function(a, b) {
-            var valA = getCellValue(a, index), valB = getCellValue(b, index)
-            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
-        }
-    }
-    function getCellValue(row, index){ return $(row).children('td').eq(index).text() }
-});
-var csrf_token = "{{ csrf_token }}";
-</script>
-<style>
-.sortable {
-    cursor: pointer;
-}
-</style>
-{% endblock %}
-{% block title %}Посмотреть позже{% endblock %}
-{% block body %}
-<h1>Количество неизведанных историй <span id="entries-count">{{ count_entries }}</span></h1>
-<table class="table table-sm table-hover">
-    <thead class="table-secondary">
-        <tr>
-            <th class="sortable" scope="col">&#8470</th>
-            <th class="sortable" scope="col" style="width: 100px">Тип медиа</th>
-            <th class="sortable" scope="col" style="width: 400px">Название</th>
-            <th scope="col" style="width: 250px">Жанры</th>
-            <th class="sortable" scope="col">Приор.</th>
-            <th scope="col" colspan="2">Описание</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for entry in my_list %}
-        <tr>
-            <td><strong>{{ forloop.counter }}</strong></td>
-            <td>{{ entry.medium_type }}</td>
-            <td>{{ entry.title }}</td>
-            <td>
-                {% for genre in entry.genres.all %}
-                    {{ genre }}
-                {% endfor %}
-            </td>
-            <td>{{ entry.priority }}</td>
-            <td>{{ entry.description }}</td>
-            <td>
-                <button class="btn btn-sm btn-outline-danger delete-button" data-id="{{ entry.id }}">удалить</button>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endblock %}
+
+
+
