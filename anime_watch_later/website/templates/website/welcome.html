@@ -11,7 +11,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
+        <div class="container">
             <a class="navbar-brand" href="{% url 'welcome' %}">
                 <img src="{% static 'website/ngelo.png' %}" alt="Ngel0" width="55" height="50">
                 WatchLater
@@ -28,8 +28,8 @@
         </div>
     </nav>
     <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-4">
                 <div class="card" style="width: 24rem;">
                     <div class="card-body">
                         <p class="card-text">Это сгенерированный ИИ текст, потому что мне лень самому придумывать: "Добро пожаловать в WatchLater! Здесь Вы можете легко следить за фильмами, сериалами, аниме, играми и книгами, которые вы хотите посмотреть позже. Наша платформа бесплатна для использования, без рекламы, подписок и скрытых платежей. Зарегистрируйтесь сейчас и начните создавать свой список просмотра!"
@@ -38,8 +38,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <img src="{% static 'website/ngelo.png' %}" alt="ListExample" class="img-fluid">
+            <div class="col-lg-8">
+                <img src="{% static 'website/example.png' %}" alt="ListExample" class="img-fluid">
             </div>
         </div>
     </div>

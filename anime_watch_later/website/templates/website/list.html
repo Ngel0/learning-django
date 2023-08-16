@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% block title %}Список{% endblock %}
 {% block head %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script>
@@ -49,18 +50,18 @@ var csrf_token = "{{ csrf_token }}";
 }
 </style>
 {% endblock %}
-{% block title %}Список{% endblock %}
 {% block body %}
 <h1>Количество неизведанных историй <span id="entries-count">{{ count_entries }}</span></h1>
 <table class="table table-sm table-hover">
     <thead class="table-secondary">
         <tr>
-            <th class="sortable" scope="col">&#8470</th>
+            <th class="sortable" scope="col" style="width: 20px">&#8470</th>
             <th class="sortable" scope="col" style="width: 100px">Тип медиа</th>
-            <th class="sortable" scope="col" style="width: 400px">Название</th>
-            <th scope="col" style="width: 250px">Жанры</th>
-            <th class="sortable" scope="col">Приор.</th>
-            <th scope="col" colspan="2">Описание</th>
+            <th class="sortable" scope="col" style="width: 300px">Название</th>
+            <th scope="col" style="width: 280px">Жанры</th>
+            <th class="sortable" scope="col" style="width: 20px">Приор.</th>
+            <th scope="col" style="width: 300px">Описание</th>
+            <th scope="col" style="width: 75px"></th>
         </tr>
     </thead>
     <tbody>
