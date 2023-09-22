@@ -1,5 +1,5 @@
 # Anime Watch Later (name tbd)
-Note taking app for adding shows to watch later
+Note taking app for adding shows to watch later.
 Deployed at http://ngelo.pythonanywhere.com/
 
 
